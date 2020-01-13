@@ -1,0 +1,23 @@
+{
+  "name": "get-a-gif",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Random-COSMOS/Get-a-GIF.git"
+  },
+  "author": "Random Cosmos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Random-COSMOS/Get-a-GIF/issues"
+  },
+  "homepage": "https://github.com/Random-COSMOS/Get-a-GIF#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -1,0 +1,81 @@
+// API address
+const giphyAPI = "https://api.giphy.com/v1/gifs/search?api_key=YMW1ZsxVp8JDNIuz6TdMv48tk7fyTrzm&limit=25&offset=0&rating=G&lang=en&q=";
+const wordnikAPI = "http://api.wordnik.com/v4/words.json/randomWord?api_key=8nqhsvilsbiip1s14s9ti5ip5xvrcihstf9eov0q2izmc6wzr";
+
+
+// things to do on start
+window.onload = () => $("#text").val("");
+
+
+// functions
+const say = (something) => console.log(something);
+
+const getData = async (url) => {
+
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+
+}
+
+const keyUp = () => {
+    if (event.keyCode === 13) {
+        $(".submit").click();
+    }
+}
+
+const showGif = async (query) => {
+
+    const searched = {
+        query
+    }
+    const option = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(searched)
+    };
+
+    fetch("/server", option)
+        .then(response => response.json())
+        .then(json => say(json));
+
+    say(query);
+    $(".query").html(`You searched "${query}".`).css("color", "white");
+
+    let r = Math.floor(Math.random() * 20);
+
+    const data = await getData(giphyAPI + query);
+    try {
+        const gifUrl = await data.data[r].images.downsized_large.url;
+        $(".gif").attr("src", gifUrl);
+    } catch (err) {
+        say("can't find image");
+        $(".random").click();
+    }
+
+}
+
+
+// Code
+$("#text").on("keyup", keyUp);
+
+$(".submit").on("click", () => {
+    let search = $("#text").val();
+    showGif(search);
+});
+
+$(".random").on("click", () => {
+    say(" ");
+    say("random word...")
+    getData(wordnikAPI)
+        .then(data => showGif(data.word));
+});
+
+$(".show").on("click", () => {
+    say("clicked");
+    fetch("/server")
+        .then(response => response.json())
+        .then(json => $(".wys").html(JSON.stringify(json)));
+});
