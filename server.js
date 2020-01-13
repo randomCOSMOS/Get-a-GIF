@@ -1,6 +1,7 @@
 const express = require('express');
+const datastore = require('nedb');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Listning at ${port}!`));
 app.use(express.static('public'));
@@ -11,7 +12,7 @@ app.use(express.json({
 app.post("/server", (req, res) => {
     const data = req.body;
 
-    let database = [];
+    let database = new datastore;
     database.push(data);
 
     res.json({
@@ -21,8 +22,7 @@ app.post("/server", (req, res) => {
 });
 
 app.get("/server", (req, res) => {
-    let wys = "database[0]";
     res.json({
-        wys
+
     })
 });
