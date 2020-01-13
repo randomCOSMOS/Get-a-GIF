@@ -9,11 +9,16 @@ app.use(express.json({
     limit: "1mb"
 }));
 
+const database = new datastore('recent search.db');
+database.remove({}, {
+    multi: true
+});
+database.loadDatabase();
+
 app.post("/server", (req, res) => {
     const data = req.body;
 
-    let database = new datastore;
-    database.push(data);
+    database.insert(data);
 
     res.json({
         status: "success"
@@ -22,7 +27,7 @@ app.post("/server", (req, res) => {
 });
 
 app.get("/server", (req, res) => {
-    res.json({
-
-    })
+    database.find({}, (err, docs) => {
+        res.json(docs);
+    });
 });

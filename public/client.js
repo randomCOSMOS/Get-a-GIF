@@ -42,7 +42,7 @@ const showGif = async (query) => {
         .then(json => say(json));
 
     say(query);
-    $(".query").html(`You searched "${query}".`).css("color", "white");
+    $(".query").text(`You searched "${query}".`).css("color", "white");
 
     let r = Math.floor(Math.random() * 20);
 
@@ -64,6 +64,9 @@ $("#text").on("keyup", keyUp);
 $(".submit").on("click", () => {
     let search = $("#text").val();
     showGif(search);
+    $(".ys").remove();
+    $(".hide").hide();
+    $(".show").show();
 });
 
 $(".random").on("click", () => {
@@ -71,11 +74,29 @@ $(".random").on("click", () => {
     say("random word...")
     getData(wordnikAPI)
         .then(data => showGif(data.word));
+    $(".ys").remove();
+    $(".hide").hide();
+    $(".show").show();
+
 });
 
 $(".show").on("click", () => {
-    say("clicked");
     fetch("/server")
         .then(response => response.json())
-        .then(json => $(".wys").html(JSON.stringify(json)));
+        .then(json => {
+            for (item of json) {
+                let youSearched = $("<p class=\"ys\"></p>").text(item.query + ", ");
+                $(".wys").append(youSearched);
+            }
+        });
+    $(".show").hide();
+    $(".hide").show();
+});
+
+$(".hide").hide();
+
+$(".hide").on("click", () => {
+    $(".ys").remove();
+    $(".hide").hide();
+    $(".show").show();
 });
