@@ -9,7 +9,7 @@ app.use(express.json({
     limit: "1mb"
 }));
 
-const database = new datastore('recent search.db');
+const database = new datastore('recent-search.db');
 database.remove({}, {
     multi: true
 });
