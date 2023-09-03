@@ -38,7 +38,7 @@ const showGif = async (query) => {
     };
 
     fetch("/server", option)
-        .then(response => response.json())
+        .then(response => response.json)
         .then(json => say(json));
 
     say(query);
